@@ -29,6 +29,7 @@ class BertModel(nn.Module):
         
     def forward(self, sentences):
         encoded_sentences = self.tokenizer(sentences, padding=True, truncation=True, max_length=64, return_tensors='pt')
+        encoded_sentences = encoded_sentences.to('cuda')
         output = self.model(**encoded_sentences)
         # print(output)
         # print(output.last_hidden_state)

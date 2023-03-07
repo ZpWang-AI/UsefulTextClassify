@@ -4,7 +4,8 @@ class Config:
     base = True
     clip = False
     
-    epoch = 10
+    epochs = 10
+    batch_size = 16
     
     
 def get_default_config():
