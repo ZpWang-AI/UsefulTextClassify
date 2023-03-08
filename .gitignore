@@ -1,6 +1,6 @@
 test*.py
 
-data
+data/*
 
 __pycache__
 .vscode
