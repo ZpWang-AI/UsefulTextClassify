@@ -1,6 +1,7 @@
 test*.py
 
 data/*
+!data/test1.txt
 
 __pycache__
 .vscode
