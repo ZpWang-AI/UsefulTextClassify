@@ -62,7 +62,7 @@ def eval_main(model, eval_dataloader):
         pass
     
     show_res()
-    return eval_res
+    return dict(eval_res)
     
 
 @clock(sym='-----')
@@ -85,16 +85,20 @@ def train_main():
     print('=== start training ===')
     for epoch in range(1, config.epochs+1):
         model.train()
-        for x, y in tqdm(train_data, desc=f'epoch{epoch} '):
+        for x, y in tqdm(train_data, desc=f'epoch{epoch}'):
             y = y.to(device)
             output = model(x)
             loss = criterion(output, y)
             loss.backward()
             optimizer.step()
             optimizer.zero_grad()
-            # break
+            break
         eval_res = eval_main(model, dev_data)
-        torch.save(model.state_dict(), f'{config.version}_epoch{epoch}.pth')
+        
+        torch.save(
+            model.state_dict(), 
+            f'{config.save_model_fold}/{config.version}_{int(eval_res["micro_f1 "]*1000)}_epoch{epoch}.pth'
+        )
         break   
 
 

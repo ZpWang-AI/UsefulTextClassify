@@ -5,5 +5,8 @@ data/*
 !data/randomdata_1000 20230213_training_dataset.xlsx
 !data/randomdata10k_test_dataset.xlsx
 
+saved_model
+saved_res.txt
+
 __pycache__
 .vscode

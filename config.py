@@ -22,7 +22,7 @@ class Config:
     batch_size = 8
     
     def __init__(self) -> None:
-        cur_time = datetime.datetime.now().strftime('%Y.%m.%d-%H:%M:%S')
+        cur_time = datetime.datetime.now().strftime('%Y|%m|%d-%H:%M:%S')
         self.info = f'{cur_time}_{self.version}'
         if not path(self.save_model_fold).exists():
             os.mkdir(self.save_model_fold)
@@ -34,6 +34,12 @@ class Config:
     
 def get_default_config():
     return Config()
+
+
+def get_cuda_config():
+    config = get_default_config()
+    config.device = 'cuda'
+    return config
 
 
 def get_clip_config():
