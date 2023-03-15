@@ -32,9 +32,10 @@ def eval_main(model, eval_dataloader):
             output = model(x)
             pred.append(output)
             groundtruth.append(y)
-    pred = torch.cat(pred)
+    pred = torch.cat(pred).cpu()
     groundtruth = torch.cat(groundtruth)
     # print(pred)
+    # print()
     # print(groundtruth)
     
     eval_res = [
@@ -68,6 +69,11 @@ def eval_main(model, eval_dataloader):
 @clock(sym='-----')
 def train_main():
     config = get_default_config()
+    # config = get_cuda_config()
+    config.device = 'cuda'
+    config.cuda_id = '9'
+    # config.just_test = True
+    
     device = config.device
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
@@ -78,28 +84,35 @@ def train_main():
     dev_data = CustomDataset(dev_data, config)
     dev_data = DataLoader(dev_data, batch_size=config.batch_size, shuffle=False)
         
-    model = BertModel(config).to(device)
+    model = BertModel(config)
+    model.to(device)
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.AdamW(model.parameters())
+    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
     
     print('=== start training ===')
     for epoch in range(1, config.epochs+1):
         model.train()
+        tot_loss = 0
         for x, y in tqdm(train_data, desc=f'epoch{epoch}'):
             y = y.to(device)
             output = model(x)
             loss = criterion(output, y)
             loss.backward()
+            tot_loss += loss
             optimizer.step()
             optimizer.zero_grad()
-            break
+            if config.just_test:
+                break
+        print('loss:', tot_loss/len(train_data))
         eval_res = eval_main(model, dev_data)
         
-        torch.save(
-            model.state_dict(), 
-            f'{config.save_model_fold}/{config.version}_{int(eval_res["micro_f1 "]*1000)}_epoch{epoch}.pth'
-        )
-        break   
+        if config.just_test:
+            break   
+        if epoch % config.save_model_epoch == 0:
+            torch.save(
+                model.state_dict(), 
+                f"{config.save_model_fold}/{config.info.replace(':', '_')}_{int(eval_res['micro_f1 ']*1000)}_epoch{epoch}.pth"
+            )
 
 
 if __name__ == '__main__':

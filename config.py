@@ -8,7 +8,8 @@ from pathlib import Path as path
 class Config:
     version = 'base'
     
-    model_name = 'xlm-roberta-base'
+    # model_name = 'xlm-roberta-base'
+    model_name = 'hfl/chinese-roberta-wwm-ext'
     device = 'cpu'
     cuda_id = '0'
     
@@ -17,12 +18,14 @@ class Config:
     
     base = True
     clip = False
+    just_test = False
     
     epochs = 10
     batch_size = 8
+    save_model_epoch = 5
     
     def __init__(self) -> None:
-        cur_time = datetime.datetime.now().strftime('%Y|%m|%d-%H:%M:%S')
+        cur_time = datetime.datetime.now().strftime('%Y_%m_%d-%H:%M:%S')
         self.info = f'{cur_time}_{self.version}'
         if not path(self.save_model_fold).exists():
             os.mkdir(self.save_model_fold)

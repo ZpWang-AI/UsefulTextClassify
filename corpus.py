@@ -15,10 +15,8 @@ from config import get_default_config
 # warnings.filterwarnings("ignore")
 
 
-train_data_excel = r'D:\NewDesktop\projects\53.01-文本分类-圣地亚哥大学朱教授\UsefulTextClassify\data\randomdata_1000 20230213_training_dataset.xlsx'
-train_data_txt = './data/train_data.txt'
-test_data_excel = r'D:\NewDesktop\projects\53.01-文本分类-圣地亚哥大学朱教授\UsefulTextClassify\data\randomdata10k_test_dataset.xlsx'
-test_data_txt = './data/test_data.txt'
+train_data_excel = r'./data/randomdata_1000 20230213_training_dataset.xlsx'
+test_data_excel = r'./data/randomdata10k_test_dataset.xlsx'
 
 
 def read_txt(file_path):
@@ -88,16 +86,17 @@ def deal_test_data():
 
 
 class CustomDataset(Dataset):
-    def __init__(self, data, config) -> None:
+    def __init__(self, data, config, phase='train') -> None:
         super().__init__()
         self.data = data
         self.config = config
+        self.phase = phase
     
     def __len__(self):
         return len(self.data)
     
     def deal_sentence(self, sentence:str):
-        return sentence
+        return str(sentence)
         sentence = sentence.strip().split()
         ans_sentence = []
         for word in sentence:
@@ -106,14 +105,17 @@ class CustomDataset(Dataset):
         return ' '.join(ans_sentence)
     
     def __getitem__(self, index):
-        sentence1, sentence2, label = self.data[index]
-        if self.config.base:
-            return f'{sentence1}\n{sentence2}', label
-        elif self.config.clip:
-            return self.deal_sentence(sentence1), self.deal_sentence(sentence2), label
+        if self.phase == 'train':
+            sentence1, sentence2, label = self.data[index]
+            if self.config.base:
+                return (self.deal_sentence(sentence1), self.deal_sentence(sentence2)), label
+            elif self.config.clip:
+                return (self.deal_sentence(sentence1), self.deal_sentence(sentence2)), label
+            else:
+                raise 'wrong config' 
         else:
-            raise 'wrong config'    
-        
+            sentence1, sentence2 = self.data[index]
+            return self.deal_sentence(sentence1), self.deal_sentence(sentence2)
         
 
 if __name__ == '__main__':

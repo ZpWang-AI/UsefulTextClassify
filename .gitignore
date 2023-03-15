@@ -8,5 +8,8 @@ data/*
 saved_model
 saved_res.txt
 
+*.sh
+nohup.out
+
 __pycache__
 .vscode
