@@ -1,4 +1,4 @@
-test*.py
+test*
 
 # data/*
 # !data/test1.txt
