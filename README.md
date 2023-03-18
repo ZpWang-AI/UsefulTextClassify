@@ -11,5 +11,5 @@ Classify QA corpus by BERT.
 
 1. Get parameters of the model
 2. Modify data path in "inference"
-3. Run $python inference.py$
+3. Run $python\ inference.py$
 
