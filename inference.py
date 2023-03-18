@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from config import get_default_config
-from corpus import read_excel, save_excel, preprocess_test_data, CustomDataset, test_data_file_list
+from corpus import preprocess_test_data, CustomDataset, test_data_file_list
 from model.xlm_roberta import BertModel
 
 
@@ -41,7 +41,7 @@ def inference_main():
         preds.append(output)
     preds = torch.concat(preds)
     preds = preds.cpu().numpy()
-    print(preds)
+    # print(preds)
     
     if test_data_file == test_data_file_list[0]:
         test_data_content = pd.read_excel(test_data_file, sheet_name=0)
@@ -55,6 +55,8 @@ def inference_main():
         writer = pd.ExcelWriter(save_res_path)
         test_data_content.to_excel(writer)
         writer.save()
+    else:
+        raise 'Wrong test file in inference.py'
     
     
 if __name__ == '__main__':
