@@ -8,16 +8,21 @@ from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader
 from torcheval.metrics.functional import (
-    multiclass_f1_score, 
-    multiclass_accuracy,
-    multiclass_precision,
-    multiclass_recall,
-    multiclass_confusion_matrix,
+    binary_f1_score,
+    binary_accuracy,
+    binary_precision,
+    binary_recall,
+    binary_confusion_matrix,
+    # multiclass_f1_score, 
+    # multiclass_accuracy,
+    # multiclass_precision,
+    # multiclass_recall,
+    # multiclass_confusion_matrix,
 )
 
 from utils import clock
 from config import *
-from corpus import deal_train_data, deal_test_data, CustomDataset
+from corpus import preprocess_train_data, preprocess_test_data, CustomDataset
 from model.xlm_roberta import BertModel
 
 logging.getLogger('transformers').setLevel(logging.ERROR)
@@ -33,20 +38,20 @@ def eval_main(model, eval_dataloader):
             pred.append(output)
             groundtruth.append(y)
     pred = torch.cat(pred).cpu()
+    pred = torch.argmax(pred, dim=-1)
     groundtruth = torch.cat(groundtruth)
     # print(pred)
     # print()
     # print(groundtruth)
     
     eval_res = [
-        ['macro_f1 ', multiclass_f1_score(pred, groundtruth, num_classes=2, average='macro')],
-        ['micro_f1 ', multiclass_f1_score(pred, groundtruth, num_classes=2, average='micro')],
-        ['accuracy ', multiclass_accuracy(pred, groundtruth, num_classes=2)],
-        ['precision', multiclass_precision(pred, groundtruth, num_classes=2)],
-        ['recall   ', multiclass_recall(pred, groundtruth, num_classes=2)],
+        ['f1       ', binary_f1_score(pred, groundtruth)],
+        ['accuracy ', binary_accuracy(pred, groundtruth)],
+        ['precision', binary_precision(pred, groundtruth)],
+        ['recall   ', binary_recall(pred, groundtruth)],
     ]
     eval_res = list(map(lambda x: (x[0], float(x[1])), eval_res))
-    confusion_matrix = multiclass_confusion_matrix(pred, groundtruth, num_classes=2)
+    confusion_matrix = binary_confusion_matrix(pred, groundtruth)
     confusion_matrix = np.array(confusion_matrix)
     # print(eval_res)
     # print(confusion_matrix)
@@ -72,12 +77,12 @@ def train_main():
     # config = get_cuda_config()
     config.device = 'cuda'
     config.cuda_id = '9'
-    # config.just_test = True
+    config.just_test = True
     
     device = config.device
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
-    train_data = deal_train_data()
+    train_data = preprocess_train_data()
     train_data, dev_data = train_test_split(train_data, train_size=0.8, shuffle=True)
     train_data = CustomDataset(train_data, config)
     train_data = DataLoader(train_data, batch_size=config.batch_size, shuffle=True)
@@ -111,7 +116,7 @@ def train_main():
         if epoch % config.save_model_epoch == 0:
             torch.save(
                 model.state_dict(), 
-                f"{config.save_model_fold}/{config.info.replace(':', '_')}_{int(eval_res['micro_f1 ']*1000)}_epoch{epoch}.pth"
+                f"{config.save_model_fold}/{config.info.replace(':', '_')}_{int(eval_res['accuracy ']*1000)}_epoch{epoch}.pth"
             )
 
 

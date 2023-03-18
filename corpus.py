@@ -15,8 +15,14 @@ from config import get_default_config
 # warnings.filterwarnings("ignore")
 
 
-train_data_excel = r'./data/randomdata_1000 20230213_training_dataset.xlsx'
-test_data_excel = r'./data/randomdata10k_test_dataset.xlsx'
+train_data_file_list = [
+    r'./data/randomdata_1000 20230213_training_dataset.xlsx',
+    r'./data/non_answer_dataset_for_zhipang.xlsx'
+]
+test_data_file_list = [
+    r'./data/randomdata10k_test_dataset.xlsx',
+    r'./data/non_answer_dataset_for_zhipang.xlsx'
+]
 
 
 def read_txt(file_path):
@@ -29,8 +35,8 @@ def save_txt(content: list, file_path):
         for line in content:
             f.write(str(line)+'\n')
 
-def read_excel(file_path):
-    content = pd.read_excel(file_path, sheet_name=0)
+def read_excel(file_path, sheet_name=0):
+    content = pd.read_excel(file_path, sheet_name=sheet_name)
     content = np.array(content)
     return content
 
@@ -43,46 +49,78 @@ def save_excel(lines: List[list], heads: List[str], excel_file, sheet_name, star
     # print(f'{excel_file} {sheet_name} is saved')
 
 
-def deal_train_data():
-    train_content = read_excel(train_data_excel)
-    # print(train_content)
-    # print(train_content.shape)
-    # print(train_content[0])
-    # tar = train_content[0]
-    # for p in range(0, len(tar), 5):
-    #     print(tar[p:p+5])
-    '''
-    shape: 1000 * 20
-    meaning: 
-        sn scode Coname Coname_Scode Qsubj 
-        Reply Qcount Acount Qpuretext Apuretext 
-        Qpurecount Apurecount Qtm Atm timeliness_mins 
-        timeliness_hours timeliness_days - drop non_answer
-    Qsubj: 4
-    Reply: 5
-    non_answer: 19
-    '''
-    return train_content[:, (4, 5, 19)]
+def preprocess_train_data(train_data_file=train_data_file_list[0]):
+    if train_data_file == train_data_file_list[0]:
+        train_content = read_excel(train_data_file)
+        # print(train_content)
+        # print(train_content.shape)
+        # print(train_content[0])
+        # tar = train_content[0]
+        # for p in range(0, len(tar), 5):
+        #     print(tar[p:p+5])
+        '''
+        shape: 1000 * 20
+        meaning: 
+            sn scode Coname Coname_Scode Qsubj 
+            Reply Qcount Acount Qpuretext Apuretext 
+            Qpurecount Apurecount Qtm Atm timeliness_mins 
+            timeliness_hours timeliness_days - drop non_answer
+        Qsubj: 4
+        Reply: 5
+        non_answer: 19
+        '''
+        return train_content[:, (4, 5, 19)]
+    elif train_data_file == train_data_file_list[1]:
+        train_content = read_excel(train_data_file, sheet_name=0)
+        # print(train_content)
+        # print(train_content.shape)
+        # print(train_content[0])
+        # tar = train_content[0]
+        # for p in range(0, len(tar), 5):
+        #     print(tar[p:p+5])
+        '''
+        shape: 2000 * 4
+        meaning: SN Qsubj Reply non_answer(marked)
+        '''
+        return train_content[:, 1:]
+    else:
+        raise 'Preprocess train data'
     
-def deal_test_data():
-    test_content = read_excel(test_data_excel)
-    # print(test_content)
-    # print(test_content.shape)
-    # print(test_content[0])
-    # tar = test_content[0]
-    # for p in range(0, len(tar), 5):
-    #     print(tar[p:p+5])
-    '''
-    shape: 1000 * 17
-    meaning: 
-        sn scode Coname Coname_Scode Qsubj 
-        Reply non_answer - - -
-        - - - - -
-        - drop 
-    Qsubj: 4
-    Reply: 5
-    '''
-    return test_content[:, (4, 5)]
+def preprocess_test_data(test_data_file=test_data_file_list[0]):
+    if test_data_file == test_data_file_list[0]:
+        test_content = read_excel(test_data_file)
+        # print(test_content)
+        # print(test_content.shape)
+        # print(test_content[0])
+        # tar = test_content[0]
+        # for p in range(0, len(tar), 5):
+        #     print(tar[p:p+5])
+        '''
+        shape: 1000 * 17
+        meaning: 
+            sn scode Coname Coname_Scode Qsubj 
+            Reply non_answer - - -
+            - - - - -
+            - drop 
+        Qsubj: 4
+        Reply: 5
+        '''
+        return test_content[:, (4, 5)]
+    elif test_data_file == test_data_file_list[1]:
+        test_content = read_excel(test_data_file, sheet_name=1)
+        # print(test_content)
+        # print(test_content.shape)
+        # print(test_content[0])
+        # tar = test_content[0]
+        # for p in range(0, len(tar), 5):
+        #     print(tar[p:p+5])
+        '''
+        shape: 1000 * 4
+        meaning: SN, Qsubj, Reply, non_answer
+        '''
+        return 
+    else:
+        raise 'Preprocess test data'
 
 
 class CustomDataset(Dataset):
@@ -120,10 +158,11 @@ class CustomDataset(Dataset):
 
 if __name__ == '__main__':
 
-    # print(deal_train_data())
-    # print(deal_test_data())
+    # print(preprocess_train_data(train_data_file_list[1]))
+    # print(preprocess_test_data(test_data_file_list[1]))
+    # exit()
     sample_config = get_default_config()
-    sample_train_data = deal_train_data()
+    sample_train_data = preprocess_train_data(train_data_file_list[1])
     sample_train_data = CustomDataset(sample_train_data, sample_config)
     sample_train_data = DataLoader(sample_train_data, batch_size=3, shuffle=False)
     for sample_input in sample_train_data:
