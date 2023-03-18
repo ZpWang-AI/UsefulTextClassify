@@ -29,9 +29,10 @@ class BertModel(nn.Module):
         
     def forward(self, sentences):
         # sentences = [sa+self.tokenizer.sep_token+sb for sa, sb in zip(*sentences)]
-        sentences = [sb for sa, sb in zip(*sentences)]
+        sentences = [sb+self.tokenizer.sep_token+sa for sa, sb in zip(*sentences)]
+        # sentences = [sb for sa, sb in zip(*sentences)]
         
-        encoded_sentences = self.tokenizer(sentences, padding=True, truncation=True, max_length=64, return_tensors='pt')
+        encoded_sentences = self.tokenizer(sentences, padding=True, truncation=True, max_length=512, return_tensors='pt')
         encoded_sentences = encoded_sentences.to(self.config.device)
         output = self.model(**encoded_sentences)
         return output.logits

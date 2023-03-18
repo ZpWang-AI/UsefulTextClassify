@@ -83,6 +83,7 @@ def train_main():
     # config.just_test = True
     train_data_file = train_data_file_list[1]
     config.save_model_epoch = 1
+    config.batch_size = 8
     
     device = config.device
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
@@ -121,7 +122,7 @@ def train_main():
         if epoch % config.save_model_epoch == 0:
             torch.save(
                 model.state_dict(), 
-                f"{config.save_model_fold}/{config.info.replace(':', '_')}_{int(eval_res['accuracy ']*1000)}_epoch{epoch}.pth"
+                f"{config.save_model_fold}/{config.info.replace(':', '_')}_epoch{epoch}_{int(eval_res['accuracy ']*1000)}.pth"
             )
 
 

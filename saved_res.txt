@@ -1,4 +1,5 @@
 2023_03_18-11_17_46_base_910_epoch10.pth
+# base, only reply used
 f1       : 80.43%
 accuracy : 91.00%
 precision: 79.57%
@@ -6,3 +7,23 @@ recall   : 81.32%
 	 pred_0	 pred_1
 gt_0 	 290 	 19
 gt_1 	 17 	 74
+
+2023_03_18-11_30_01_base_epoch10_904.pth
+# base, question+reply
+f1       : 78.89%
+accuracy : 90.50%
+precision: 78.89%
+recall   : 78.89%
+	 pred_0	 pred_1
+gt_0 	 291 	 19
+gt_1 	 19 	 71
+
+2023_03_18-11_38_02_base_epoch10_902.pth
+# base, reply+question
+f1       : 79.58%
+accuracy : 90.25%
+precision: 76.00%
+recall   : 83.52%
+	 pred_0	 pred_1
+gt_0 	 285 	 24
+gt_1 	 15 	 76

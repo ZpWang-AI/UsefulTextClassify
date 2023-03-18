@@ -118,7 +118,7 @@ def preprocess_test_data(test_data_file=test_data_file_list[0]):
         shape: 1000 * 4
         meaning: SN, Qsubj, Reply, non_answer
         '''
-        return 
+        return test_content
     else:
         raise 'Preprocess test data'
 
