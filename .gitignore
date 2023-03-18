@@ -6,7 +6,7 @@ test*
 !data/randomdata10k_test_dataset.xlsx
 
 saved_model/*
-saved_res.txt
+# saved_res.txt
 
 *.sh
 nohup.out

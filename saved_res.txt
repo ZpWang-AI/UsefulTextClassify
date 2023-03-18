@@ -1,0 +1,8 @@
+2023_03_18-11_17_46_base_910_epoch10.pth
+f1       : 80.43%
+accuracy : 91.00%
+precision: 79.57%
+recall   : 81.32%
+	 pred_0	 pred_1
+gt_0 	 290 	 19
+gt_1 	 17 	 74
