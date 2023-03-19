@@ -75,20 +75,11 @@ def eval_main(model, eval_dataloader):
     
 
 @clock(sym='-----')
-def train_main():
-    config = get_default_config()
-    # config = get_cuda_config()
-    config.device = 'cuda'
-    config.cuda_id = '9'
-    # config.just_test = True
-    train_data_file = train_data_file_list[2]
-    config.save_model_epoch = 1
-    config.batch_size = 8
-    
+def train_main(config: CustomConfig):    
     device = config.device
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
-    train_data = preprocess_train_data(train_data_file)
+    train_data = preprocess_train_data(config.train_data_file)
     train_data, dev_data = train_test_split(train_data, train_size=0.8, shuffle=True)
     train_data = CustomDataset(train_data, config)
     train_data = DataLoader(train_data, batch_size=config.batch_size, shuffle=True)
@@ -127,4 +118,12 @@ def train_main():
 
 
 if __name__ == '__main__':
-    train_main()
+    custom_config = CustomConfig()
+    custom_config.device = 'cuda'
+    custom_config.cuda_id = '9'
+    
+    # config.just_test = True
+    custom_config.train_data_file = train_data_file_list[2]
+    custom_config.save_model_epoch = 1
+    custom_config.batch_size = 8
+    train_main(custom_config)
