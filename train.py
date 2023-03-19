@@ -81,7 +81,7 @@ def train_main():
     config.device = 'cuda'
     config.cuda_id = '9'
     # config.just_test = True
-    train_data_file = train_data_file_list[1]
+    train_data_file = train_data_file_list[2]
     config.save_model_epoch = 1
     config.batch_size = 8
     

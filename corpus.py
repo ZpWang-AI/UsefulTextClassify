@@ -17,11 +17,12 @@ from config import get_default_config
 
 train_data_file_list = [
     r'./data/randomdata_1000 20230213_training_dataset.xlsx',
-    r'./data/non_answer_dataset_for_zhipang.xlsx'
+    r'./data/non_answer_dataset_for_zhipang.xlsx',
+    r'./data/2_result.xlsx',
 ]
 test_data_file_list = [
     r'./data/randomdata10k_test_dataset.xlsx',
-    r'./data/non_answer_dataset_for_zhipang.xlsx'
+    r'./data/non_answer_dataset_for_zhipang.xlsx',
 ]
 
 
@@ -52,7 +53,6 @@ def save_excel(lines: List[list], heads: List[str], excel_file, sheet_name, star
 def preprocess_train_data(train_data_file=train_data_file_list[0]):
     if train_data_file == train_data_file_list[0]:
         train_content = read_excel(train_data_file)
-        # print(train_content)
         # print(train_content.shape)
         # print(train_content[0])
         # tar = train_content[0]
@@ -72,7 +72,6 @@ def preprocess_train_data(train_data_file=train_data_file_list[0]):
         return train_content[:, (4, 5, 19)]
     elif train_data_file == train_data_file_list[1]:
         train_content = read_excel(train_data_file, sheet_name=0)
-        # print(train_content)
         # print(train_content.shape)
         # print(train_content[0])
         # tar = train_content[0]
@@ -83,6 +82,18 @@ def preprocess_train_data(train_data_file=train_data_file_list[0]):
         meaning: SN Qsubj Reply non_answer(marked)
         '''
         return train_content[:, 1:]
+    elif train_data_file == train_data_file_list[2]:
+        train_content = read_excel(train_data_file, sheet_name=1)
+        # print(train_content.shape)
+        # print(train_content[0])
+        # tar = train_content[0]
+        # for p in range(0, len(tar), 5):
+        #     print(tar[p:p+5])
+        '''
+        shape: 1000 * 6
+        meaning: <EMPTY> SN Qsubj Reply <non_answer (machine marked)> <non_answer (human marked)>
+        '''
+        return train_content[:, (2, 3, 5)]
     else:
         raise 'Preprocess train data'
     
@@ -158,7 +169,7 @@ class CustomDataset(Dataset):
 
 if __name__ == '__main__':
 
-    # print(preprocess_train_data(train_data_file_list[1]))
+    # print(preprocess_train_data(train_data_file_list[2]))
     # print(preprocess_test_data(test_data_file_list[1]))
     # exit()
     sample_config = get_default_config()
