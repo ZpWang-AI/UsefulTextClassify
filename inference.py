@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 from config import get_default_config
 from corpus import preprocess_test_data, CustomDataset, test_data_file_list
-from model.xlm_roberta import BertModel
+from model.bertModel import BertModel
 
 
 def inference_main():

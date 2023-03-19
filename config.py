@@ -17,6 +17,8 @@ class CustomConfig:
     pretrained_model_fold = './saved_model'
     save_res_file = './saved_res.txt'
     
+    input_feature = 'reply only'  # reply only, qsubj+reply, reply+qsubj
+    
     base = True
     clip = False
     just_test = False

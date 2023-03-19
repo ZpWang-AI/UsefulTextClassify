@@ -27,7 +27,7 @@ from corpus import (train_data_file_list,
                     preprocess_train_data, 
                     preprocess_test_data, 
                     CustomDataset)
-from model.xlm_roberta import BertModel
+from model.bertModel import BertModel
 
 logging.getLogger('transformers').setLevel(logging.ERROR)
 

@@ -182,7 +182,7 @@ if __name__ == '__main__':
         break
     # exit()
     
-    from model.xlm_roberta import BertModel
+    from model.bertModel import BertModel
     sample_model = BertModel(sample_config)
     sample_criterion = nn.CrossEntropyLoss(reduction='sum')
     for sample_x, sample_y in sample_train_data:
