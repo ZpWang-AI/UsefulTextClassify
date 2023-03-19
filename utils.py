@@ -99,7 +99,7 @@ class MyLogger:
                 fold = f'saved_res/{get_cur_time()}_{info}'
             if not file:
                 file = f'{get_cur_time()}_{info}.out'
-            self.log_file = path(fold).joinpath(path(file))
+            self.log_file = path(fold)/path(file)
             self.log_file.parent.mkdir(parents=True, exist_ok=True)
             self.info(f'LOG FILE >> {self.log_file}')
             

@@ -15,6 +15,7 @@ class CustomConfig:
     
     train_data_file = './data/randomdata_1000 20230213_training_dataset.xlsx'
     pretrained_model_fold = './saved_model'
+    save_res_fold = './saved_res'
     save_res_file = './saved_res.txt'
     
     input_feature = 'reply only'  # reply only, qsubj+reply, reply+qsubj
@@ -26,3 +27,4 @@ class CustomConfig:
     epochs = 10
     batch_size = 8
     save_model_epoch = 5
+    train_ratio = 0.8

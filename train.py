@@ -20,7 +20,7 @@ from torcheval.metrics.functional import (
     # multiclass_confusion_matrix,
 )
 
-from utils import clock
+from utils import *
 from config import *
 from corpus import (train_data_file_list,
                     test_data_file_list,
@@ -79,8 +79,13 @@ def train_main(config: CustomConfig):
     device = config.device
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
+    saved_res_fold = path(config.save_res_fold)
+    saved_res_fold.mkdir(parents=True, exist_ok=True)
+    log_fold = saved_res_fold.joinpath(path(f'{get_cur_time()}_'))
+    logger = MyLogger(fold=)
+    
     train_data = preprocess_train_data(config.train_data_file)
-    train_data, dev_data = train_test_split(train_data, train_size=0.8, shuffle=True)
+    train_data, dev_data = train_test_split(train_data, train_size=config.train_ratio, shuffle=True)
     train_data = CustomDataset(train_data, config)
     train_data = DataLoader(train_data, batch_size=config.batch_size, shuffle=True)
     dev_data = CustomDataset(dev_data, config)
