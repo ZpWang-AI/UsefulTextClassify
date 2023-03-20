@@ -16,6 +16,7 @@ saved_res/*
 
 *.sh
 nohup.out
+run.ipynb
 
 __pycache__
 .vscode

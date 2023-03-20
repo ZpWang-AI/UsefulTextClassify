@@ -86,7 +86,7 @@ def train_main(config: CustomConfig):
     saved_model_fold.mkdir(parents=True, exist_ok=True)
     
     logger = MyLogger(
-        fold=saved_res_fold, file=f'{start_time}_{config.version}',
+        fold=saved_res_fold, file=f'{start_time}_{config.version}.out',
         just_print=config.just_test, log_with_time=(not config.just_test),
     )
     
@@ -155,6 +155,7 @@ if __name__ == '__main__':
         
         # custom_config.just_test = True
         custom_config.save_model_epoch = 1
+        custom_config.pb_frequency = 20
         custom_config.batch_size = 8
         custom_config.lr = 5e-5
         
@@ -164,6 +165,7 @@ if __name__ == '__main__':
     
     def get_config_11():
         config = get_config_base_test()
+        config.version = 'train 1 test 1'
         config.cuda_id = '9'
         config.train_data_file = train_data_file_list[1]
         config.dev_data_file = ''
@@ -171,6 +173,7 @@ if __name__ == '__main__':
         
     def get_config_22():
         config = get_config_base_test()
+        config.version = 'train 2 test 2'
         config.cuda_id = '8'
         config.train_data_file = train_data_file_list[2]
         config.dev_data_file = ''
@@ -178,6 +181,7 @@ if __name__ == '__main__':
     
     def get_config_12():
         config = get_config_base_test()
+        config.version = 'train 1 test 2'
         config.cuda_id = '7'
         config.train_data_file = train_data_file_list[1]
         config.dev_data_file = train_data_file_list[2]
@@ -185,16 +189,27 @@ if __name__ == '__main__':
         
     def get_config_21():
         config = get_config_base_test()
+        config.version = 'train 2 test 1'
         config.cuda_id = '6'
         config.train_data_file = train_data_file_list[2]
         config.dev_data_file = train_data_file_list[1]
         return config
     
-    def get_config_11():
+    def get_config_mix_12():
         config = get_config_base_test()
-        config.cuda_id = '9'
-        config.train_data_file = train_data_file_list[1]
+        config.version = 'train mix12 test mix12'
+        config.cuda_id = '5'
+        config.train_data_file = train_data_file_list[1]+'@'+train_data_file_list[2]
         config.dev_data_file = ''
         return config
-    train_main(custom_config)
+    
+    # train_main(get_config_base_test())
+    # train_main(get_config_base_test())
+    # exit()
+    train_main(get_config_11())
+    train_main(get_config_22())
+    train_main(get_config_12())
+    train_main(get_config_21())
+    train_main(get_config_mix_12())
+    
     
