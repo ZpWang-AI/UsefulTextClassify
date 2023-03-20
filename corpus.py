@@ -156,7 +156,7 @@ class CustomDataset(Dataset):
         return ' '.join(ans_sentence)
     
     def __getitem__(self, index):
-        if self.phase == 'train':
+        if self.phase == 'train' or self.phase == 'dev':
             sentence1, sentence2, label = self.data[index]
             if self.config.base:
                 return (self.deal_sentence(sentence1), self.deal_sentence(sentence2)), label
@@ -164,10 +164,18 @@ class CustomDataset(Dataset):
                 return (self.deal_sentence(sentence1), self.deal_sentence(sentence2)), label
             else:
                 raise 'wrong config' 
+        elif self.phase == 'test':
+            if len(self.data[index]) == 2:
+                sentence1, sentence2 = self.data[index]
+                return self.deal_sentence(sentence1), self.deal_sentence(sentence2)
+            elif len(self.data[index]) == 3:
+                sentence1, sentence2, _ = self.data[index]
+                return self.deal_sentence(sentence1), self.deal_sentence(sentence2)
+            else:
+                raise 'Wrong Dataset'
         else:
-            sentence1, sentence2 = self.data[index]
-            return self.deal_sentence(sentence1), self.deal_sentence(sentence2)
-        
+            raise 'Wrong phase of dataset'
+
 
 if __name__ == '__main__':
 

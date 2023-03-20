@@ -6,30 +6,25 @@ import numpy as np
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from config import get_default_config
+from utils import *
+from config import CustomConfig
 from corpus import preprocess_test_data, CustomDataset, test_data_file_list
 from model.bertModel import BertModel
 
 
-def inference_main():
-    config = get_default_config()
-    config.batch_size = 64
-    config.device = 'cuda'
-    config.cuda_id = '9'
-    test_data_file = test_data_file_list[1]
-    
+def inference_main(config: CustomConfig):
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
-    model_params_path = './saved_model/2023_03_18-11_17_46_base_910_epoch10.pth'
-    save_res_path = './data/result.xlsx'
+    save_res_path = f'./data/result_{config.version}.xlsx'
     
     model = BertModel(config)
-    model.load_state_dict(torch.load(model_params_path))
+    model.load_state_dict(torch.load(config.test_model_path))
     model.to(config.device)
     model.eval()
     
+    test_data_file = config.test_data_file
     test_data = preprocess_test_data(test_data_file)
-    print(test_data)
+    # print(test_data)
     
     test_dataset = CustomDataset(test_data, config, phase='test')
     test_dataloader = DataLoader(test_dataset, batch_size=config.batch_size, shuffle=False)
@@ -60,5 +55,12 @@ def inference_main():
     
     
 if __name__ == '__main__':
-    inference_main()
+    custom_config = CustomConfig()
+    custom_config.batch_size = 16
+    custom_config.version = 'train1test1_test2'
+    custom_config.device = 'cuda'
+    custom_config.cuda_id = '9'
+    custom_config.test_data_file = test_data_file_list[1]
+    custom_config.test_model_path = r'./saved_res/2023-03-20_13:33:05_train 1 test 2/saved_model/2023-03-20_13-33-05_epoch10_830.pth'
+    inference_main(custom_config)
     
