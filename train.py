@@ -87,10 +87,13 @@ def train_main(config: CustomConfig):
     
     logger = MyLogger(
         fold=saved_res_fold, file=f'{start_time}_{config.version}.out',
-        just_print=config.just_test, log_with_time=(not config.just_test),
+        just_print=config.just_test, 
+        # log_with_time=(not config.just_test),
+        log_with_time=False,
     )
     
     logger.info(config.as_list())
+    logger.info(get_cur_time())
     
     train_data = preprocess_train_data(config.train_data_file)
     if not config.dev_data_file:
@@ -129,7 +132,7 @@ def train_main(config: CustomConfig):
             if p % config.pb_frequency == 0 or p == len(train_data):
                 pb.update(min(config.pb_frequency, pb.total-pb.n))
                 # logger.info(f'loss: {tot_loss.average:.6f}, lr: {scheduler.get_lr()[0]}')
-                logger.info(f'batch[{p}/{len(train_data)}],loss: {tot_loss.average:.6f}')
+                logger.info(f'batch[{p}/{len(train_data)}], loss: {tot_loss.average:.6f}')
         pb.close()
         logger.info(f'epoch{epoch} ends')
         eval_res = eval_main(model, dev_data, logger)
@@ -148,6 +151,7 @@ def train_main(config: CustomConfig):
                 saved_model_fold / saved_model_file
             )
     logger.info('=== finish training ===')
+    logger.info(get_cur_time())
     logger.close()
     del logger
 
@@ -156,7 +160,7 @@ if __name__ == '__main__':
     def get_config_base_test():
         custom_config = CustomConfig()
         custom_config.device = 'cuda'
-        custom_config.cuda_id = '9'
+        custom_config.cuda_id = '8'
         
         # custom_config.just_test = True
         custom_config.save_model_epoch = 1
@@ -171,7 +175,6 @@ if __name__ == '__main__':
     def get_config_11():
         config = get_config_base_test()
         config.version = 'train 1 test 1'
-        config.cuda_id = '9'
         config.train_data_file = train_data_file_list[1]
         config.dev_data_file = ''
         return config
@@ -179,7 +182,6 @@ if __name__ == '__main__':
     def get_config_22():
         config = get_config_base_test()
         config.version = 'train 2 test 2'
-        config.cuda_id = '8'
         config.train_data_file = train_data_file_list[2]
         config.dev_data_file = ''
         return config
@@ -187,7 +189,6 @@ if __name__ == '__main__':
     def get_config_12():
         config = get_config_base_test()
         config.version = 'train 1 test 2'
-        config.cuda_id = '7'
         config.train_data_file = train_data_file_list[1]
         config.dev_data_file = train_data_file_list[2]
         return config
@@ -195,7 +196,6 @@ if __name__ == '__main__':
     def get_config_21():
         config = get_config_base_test()
         config.version = 'train 2 test 1'
-        config.cuda_id = '6'
         config.train_data_file = train_data_file_list[2]
         config.dev_data_file = train_data_file_list[1]
         return config
@@ -203,18 +203,17 @@ if __name__ == '__main__':
     def get_config_mix_12():
         config = get_config_base_test()
         config.version = 'train mix12 test mix12'
-        config.cuda_id = '5'
         config.train_data_file = train_data_file_list[1]+'@'+train_data_file_list[2]
         config.dev_data_file = ''
         return config
     
-    train_main(get_config_base_test())
-    train_main(get_config_base_test())
-    exit()
-    # train_main(get_config_11())
-    # train_main(get_config_22())
-    # train_main(get_config_12())
-    # train_main(get_config_21())
-    # train_main(get_config_mix_12())
+    # train_main(get_config_base_test())
+    # train_main(get_config_base_test())
+    # exit()
+    train_main(get_config_11())
+    train_main(get_config_22())
+    train_main(get_config_12())
+    train_main(get_config_21())
+    train_main(get_config_mix_12())
     
     
