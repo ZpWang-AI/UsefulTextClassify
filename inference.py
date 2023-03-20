@@ -57,10 +57,12 @@ def inference_main(config: CustomConfig):
 if __name__ == '__main__':
     custom_config = CustomConfig()
     custom_config.batch_size = 16
-    custom_config.version = 'train1test1_test2'
     custom_config.device = 'cuda'
     custom_config.cuda_id = '9'
     custom_config.test_data_file = test_data_file_list[1]
-    custom_config.test_model_path = r'./saved_res/2023-03-20_13:33:05_train 1 test 2/saved_model/2023-03-20_13-33-05_epoch10_830.pth'
+    # custom_config.version = 'train1test2_test2'
+    # custom_config.test_model_path = r'./saved_res/2023-03-20_13:33:05_train 1 test 2/saved_model/2023-03-20_13-33-05_epoch10_830.pth'
+    custom_config.version = 'train1test1_test2'
+    custom_config.test_model_path = r'./saved_res/2023-03-20_13:26:12_train 1 test 1/saved_model/2023-03-20_13-26-12_epoch10_857.pth'
     inference_main(custom_config)
     
