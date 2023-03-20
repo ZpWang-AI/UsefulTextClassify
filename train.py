@@ -81,6 +81,7 @@ def train_main(config: CustomConfig):
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
     start_time = get_cur_time()
+    config.version = config.version.replace(' ', '_')
     saved_res_fold = path(config.save_res_fold) / path(f'{start_time}_{config.version}')
     saved_model_fold = saved_res_fold / path('saved_model')
     saved_model_fold.mkdir(parents=True, exist_ok=True)
