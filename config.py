@@ -17,7 +17,7 @@ class CustomConfig:
     dev_data_file = ''
     pretrained_model_fold = './saved_model'
     save_res_fold = './saved_res'
-    save_res_file = './saved_res.txt'
+    # save_res_file = './saved_res.txt'
     
     input_feature = 'reply only'  # reply only, qsubj+reply, reply+qsubj
     

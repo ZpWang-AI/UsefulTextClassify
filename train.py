@@ -125,11 +125,13 @@ def train_main(config: CustomConfig):
             # scheduler.step()
             if config.just_test:
                 break
-            if (p+1) % config.pb_frequency == 0 or (p+1) == len(train_data):
+            p += 1
+            if p % config.pb_frequency == 0 or p == len(train_data):
                 pb.update(min(config.pb_frequency, pb.total-pb.n))
                 # logger.info(f'loss: {tot_loss.average:.6f}, lr: {scheduler.get_lr()[0]}')
-                logger.info(f'loss: {tot_loss.average:.6f}')
+                logger.info(f'batch[{p}/{len(train_data)}],loss: {tot_loss.average:.6f}')
         pb.close()
+        logger.info(f'epoch{epoch} ends')
         eval_res = eval_main(model, dev_data, logger)
         
         if config.just_test:
@@ -145,6 +147,9 @@ def train_main(config: CustomConfig):
                 model.state_dict(), 
                 saved_model_fold / saved_model_file
             )
+    logger.info('=== finish training ===')
+    logger.close()
+    del logger
 
 
 if __name__ == '__main__':
@@ -203,13 +208,13 @@ if __name__ == '__main__':
         config.dev_data_file = ''
         return config
     
-    # train_main(get_config_base_test())
-    # train_main(get_config_base_test())
-    # exit()
-    train_main(get_config_11())
-    train_main(get_config_22())
-    train_main(get_config_12())
-    train_main(get_config_21())
-    train_main(get_config_mix_12())
+    train_main(get_config_base_test())
+    train_main(get_config_base_test())
+    exit()
+    # train_main(get_config_11())
+    # train_main(get_config_22())
+    # train_main(get_config_12())
+    # train_main(get_config_21())
+    # train_main(get_config_mix_12())
     
     

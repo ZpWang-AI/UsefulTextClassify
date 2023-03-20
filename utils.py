@@ -79,7 +79,7 @@ def get_cur_time(time_zone_hours=8):
 
 class MyLogger:
     def __init__(self, fold='', file='', info='', just_print=False, log_with_time=True) -> None:
-        self.logger = logging.getLogger('ZpwangLogger')
+        self.logger = logging.getLogger(str(datetime.datetime.now()))
         self.just_print = just_print
         self.log_with_time = log_with_time
     
@@ -109,6 +109,12 @@ class MyLogger:
     
     def info(self, *args, sep=' '):
         self.logger.info(sep.join(map(str, args)))
+    
+    def close(self):
+        for handler in self.logger.handlers:
+            handler.close()
+            self.logger.removeHandler(handler)
+
 
 
 class AverageMeter:
