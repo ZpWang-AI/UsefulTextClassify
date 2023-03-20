@@ -28,7 +28,9 @@ class CustomConfig:
     epochs = 10
     batch_size = 8
     save_model_epoch = 5
+    pb_frequency = 100
     train_ratio = 0.8
+    lr = 5e-5
     
     def as_list(self):
         return [[attr, getattr(self, attr)] for attr in dir(self)
