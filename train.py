@@ -79,28 +79,38 @@ def train_main(config: CustomConfig):
     device = config.device
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
-    saved_res_fold = path(config.save_res_fold)
+    saved_res_fold = path(config.save_res_fold) / path(f'{get_cur_time()}_{config.version}')
     saved_res_fold.mkdir(parents=True, exist_ok=True)
-    log_fold = saved_res_fold.joinpath(path(f'{get_cur_time()}_'))
-    logger = MyLogger(fold=)
+    saved_model_fold = saved_res_fold / path('saved_model')
+    logger = MyLogger(
+        fold=saved_res_fold, file=f'{get_cur_time()}_{config.version}',
+        just_print=config.just_test, log_with_time=(not config.just_test),
+    )
+    
+    logger.info(config.as_list())
     
     train_data = preprocess_train_data(config.train_data_file)
-    train_data, dev_data = train_test_split(train_data, train_size=config.train_ratio, shuffle=True)
+    if not config.dev_data_file:
+        train_data, dev_data = train_test_split(train_data, train_size=config.train_ratio, shuffle=True)
+    else:
+        dev_data = preprocess_test_data(config.dev_data_file)
     train_data = CustomDataset(train_data, config)
     train_data = DataLoader(train_data, batch_size=config.batch_size, shuffle=True)
     dev_data = CustomDataset(dev_data, config)
     dev_data = DataLoader(dev_data, batch_size=config.batch_size, shuffle=False)
         
     model = BertModel(config)
+    model.get_pretrained_model()
     model.to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
     
-    print('=== start training ===')
+    logger.info('=== start training ===')
     for epoch in range(1, config.epochs+1):
         model.train()
         tot_loss = 0
-        for x, y in tqdm(train_data, desc=f'epoch{epoch}'):
+        pb = tqdm(total=len(train_data), desc=f'epoch{epoch}(loss:{})')
+        for x, y in train_data:
             y = y.to(device)
             output = model(x)
             loss = criterion(output, y)

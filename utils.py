@@ -110,6 +110,23 @@ class MyLogger:
     def info(self, *args, sep=' '):
         self.logger.info(sep.join(map(str, args)))
 
+
+class AverageMeter:
+    def __init__(self) -> None:
+        self.reset()
+        
+    def reset(self):
+        self.n = 0
+        self.val = 0
+        self.sum = 0
+        self.average = 0
+    
+    def add(self, val, n=1):
+        self.n += n
+        self.val = val
+        self.sum += val
+        self.average = self.sum / self.n
+        
     
 if __name__ == '__main__':
     # for d in get_all_files('.'):

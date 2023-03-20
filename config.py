@@ -14,6 +14,7 @@ class CustomConfig:
     cuda_id = '0'
     
     train_data_file = './data/randomdata_1000 20230213_training_dataset.xlsx'
+    dev_data_file = ''
     pretrained_model_fold = './saved_model'
     save_res_fold = './saved_res'
     save_res_file = './saved_res.txt'
@@ -28,3 +29,17 @@ class CustomConfig:
     batch_size = 8
     save_model_epoch = 5
     train_ratio = 0.8
+    
+    def as_list(self):
+        return [[attr, getattr(self, attr)] for attr in dir(self)
+                if not callable(getattr(self, attr)) and not attr.startswith("__")]
+    
+    def as_dict(self):
+        return dict(self.as_list())
+   
+
+if __name__ == '__main__':
+    sample_config = CustomConfig()
+    print(sample_config.as_list())
+    print(sample_config.as_dict())
+    pass
