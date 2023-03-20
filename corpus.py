@@ -10,7 +10,7 @@ from torch.utils.data import Dataset, DataLoader
 from typing import *
 from pathlib import Path as path
 
-from config import get_default_config
+from config import CustomConfig
 
 # warnings.filterwarnings("ignore")
 
@@ -94,6 +94,8 @@ def preprocess_train_data(train_data_file=train_data_file_list[0]):
         meaning: <EMPTY> SN Qsubj Reply <non_answer (machine marked)> <non_answer (human marked)>
         '''
         return train_content[:, (2, 3, 5)]
+    elif '@' in train_data_file:
+        return np.concatenate([preprocess_train_data(file)for file in train_data_file.split('@')])
     else:
         raise 'Preprocess train data'
     
@@ -172,8 +174,9 @@ if __name__ == '__main__':
     # print(preprocess_train_data(train_data_file_list[2]))
     # print(preprocess_test_data(test_data_file_list[1]))
     # exit()
-    sample_config = get_default_config()
-    sample_train_data = preprocess_train_data(train_data_file_list[1])
+    sample_config = CustomConfig()
+    sample_train_file = train_data_file_list[1]+'@'+train_data_file_list[2]
+    sample_train_data = preprocess_train_data(sample_train_file)
     sample_train_data = CustomDataset(sample_train_data, sample_config)
     sample_train_data = DataLoader(sample_train_data, batch_size=3, shuffle=False)
     for sample_input in sample_train_data:

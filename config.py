@@ -28,7 +28,7 @@ class CustomConfig:
     epochs = 10
     batch_size = 8
     save_model_epoch = 5
-    pb_frequency = 100
+    pb_frequency = 10
     train_ratio = 0.8
     lr = 5e-5
     

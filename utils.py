@@ -126,6 +126,9 @@ class AverageMeter:
         self.val = val
         self.sum += val
         self.average = self.sum / self.n
+
+    def __add__(self, val):
+        self.add(val)
         
     
 if __name__ == '__main__':
