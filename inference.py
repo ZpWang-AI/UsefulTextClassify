@@ -13,6 +13,8 @@ from model.bertModel import BertModel
 
 
 def inference_main(config: CustomConfig):
+    print(config.as_dict())
+    
     os.environ['CUDA_VISIBLE_DEVICES'] = config.cuda_id
     
     save_res_path = f'./data/result_{config.version}.xlsx'
@@ -30,10 +32,17 @@ def inference_main(config: CustomConfig):
     test_dataloader = DataLoader(test_dataset, batch_size=config.batch_size, shuffle=False)
     
     preds = []
-    for input_x in tqdm(test_dataloader):
+    pb = tqdm(total=len(test_dataloader))
+    for p, input_x in enumerate(test_dataloader):
         with torch.no_grad():
             output = model.predict(input_x)
         preds.append(output)
+        p += 1
+        if p % config.pb_frequency == 0:
+            pb.update(config.pb_frequency)
+        elif p == len(test_dataloader):
+            pb.update(pb.total-pb.n)
+    pb.close()
     preds = torch.concat(preds)
     preds = preds.cpu().numpy()
     # print(preds)
@@ -50,19 +59,31 @@ def inference_main(config: CustomConfig):
         writer = pd.ExcelWriter(save_res_path)
         test_data_content.to_excel(writer)
         writer.save()
+    elif test_data_file == test_data_file_list[2]:
+        save_res_path = f'./data/result_{config.version}.csv'
+        with open(save_res_path, 'w')as f:
+            for p, d in enumerate(list(preds)):
+                f.write(f'{p},{d}\n')
     else:
         raise 'Wrong test file in inference.py'
     
     
 if __name__ == '__main__':
     custom_config = CustomConfig()
-    custom_config.batch_size = 16
+    custom_config.batch_size = 32
     custom_config.device = 'cuda'
     custom_config.cuda_id = '9'
-    custom_config.test_data_file = test_data_file_list[1]
+
+    # custom_config.test_data_file = test_data_file_list[1]
     # custom_config.version = 'train1test2_test2'
     # custom_config.test_model_path = r'./saved_res/2023-03-20_13:33:05_train 1 test 2/saved_model/2023-03-20_13-33-05_epoch10_830.pth'
-    custom_config.version = 'train1test1_test2'
-    custom_config.test_model_path = r'./saved_res/2023-03-20_13:26:12_train 1 test 1/saved_model/2023-03-20_13-26-12_epoch10_857.pth'
-    inference_main(custom_config)
     
+    # custom_config.test_data_file = test_data_file_list[1]
+    # custom_config.version = 'train1test1_test2'
+    # custom_config.test_model_path = r'./saved_res/2023-03-20_13:26:12_train 1 test 1/saved_model/2023-03-20_13-26-12_epoch10_857.pth'
+    
+    custom_config.test_data_file = test_data_file_list[2]
+    custom_config.version = 'train1test2_txt1'
+    custom_config.test_model_path = r'./saved_res/2023-03-20_13_33_05_train_1_test_2/saved_model/2023-03-20_13-33-05_epoch10_830.pth'
+    custom_config.pb_frequency = 100
+    inference_main(custom_config)

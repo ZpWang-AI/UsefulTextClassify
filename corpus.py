@@ -133,8 +133,8 @@ def preprocess_test_data(test_data_file=test_data_file_list[0]):
         meaning: SN, Qsubj, Reply, non_answer
         '''
         return test_content[:, (1, 2)]
-    elif test_data_file == test_data_file[2]:
-        test_content = pd.read_csv(test_content)
+    elif test_data_file == test_data_file_list[2]:
+        test_content = pd.read_csv(test_data_file)
         test_content = np.array(test_content)
         return test_content
     else:
