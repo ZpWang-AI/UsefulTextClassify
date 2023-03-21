@@ -21,6 +21,7 @@ saved_model/*
 
 test*
 *.sh
+*.zip
 nohup.out
 run.ipynb
 
