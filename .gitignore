@@ -9,11 +9,11 @@ data/*
 
 
 saved_res/*/*
-!saved_res/2023-03-20_13:26:12_train 1 test 1/2023-03-20_13:26:12_train 1 test 1.out
-!saved_res/2023-03-20_13:30:41_train 2 test 2/2023-03-20_13:30:41_train 2 test 2.out
-!saved_res/2023-03-20_13:33:05_train 1 test 2/2023-03-20_13:33:05_train 1 test 2.out
-!saved_res/2023-03-20_13:38:56_train 2 test 1/2023-03-20_13:38:56_train 2 test 1.out
-!saved_res/2023-03-20_13:43:06_train mix12 test mix12/2023-03-20_13:43:06_train mix12 test mix12.out
+!saved_res/2023-03-20_13_30_41_train_2_test_2/2023-03-20_13:30:41_train_2_test_2.out
+!saved_res/2023-03-20_13_33_05_train_1_test_2/2023-03-20_13:33:05_train_1_test_2.out
+!saved_res/2023-03-20_13_26_12_train_1_test_1/2023-03-20_13:26:12_train_1_test_1.out
+!saved_res/2023-03-20_13_38_56_train_2_test_1/2023-03-20_13:38:56_train_2_test_1.out
+!saved_res/2023-03-20_13_43_06_train_mix12_test_mix12/2023-03-20_13:43:06_train_mix12_test_mix12.out
 
 saved_model/*
 # saved_res.txt

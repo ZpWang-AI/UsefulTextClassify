@@ -1,0 +1,225 @@
+[['base', True], ['batch_size', 8], ['clip', False], ['cuda_id', '8'], ['dev_data_file', './data/2_result.xlsx'], ['device', 'cuda'], ['epochs', 10], ['input_feature', 'reply only'], ['just_test', False], ['lr', 5e-05], ['model_name', 'hfl/chinese-roberta-wwm-ext'], ['pb_frequency', 20], ['pretrained_model_fold', './saved_model'], ['save_model_epoch', 1], ['save_res_fold', './saved_res'], ['train_data_file', './data/non_answer_dataset_for_zhipang.xlsx'], ['train_ratio', 0.8], ['version', 'train 1 test 2']]
+2023-03-20_13:33:05
+=== start training ===
+batch[20/250], loss: 0.327307
+batch[40/250], loss: 0.308335
+batch[60/250], loss: 0.290127
+batch[80/250], loss: 0.277511
+batch[100/250], loss: 0.272708
+batch[120/250], loss: 0.286945
+batch[140/250], loss: 0.278341
+batch[160/250], loss: 0.267123
+batch[180/250], loss: 0.262967
+batch[200/250], loss: 0.257289
+batch[220/250], loss: 0.261613
+batch[240/250], loss: 0.266423
+batch[250/250], loss: 0.266615
+epoch1 ends
+f1       : 81.69%
+accuracy : 90.90%
+precision: 78.38%
+recall   : 85.29%
+
+	 pred_0	 pred_1
+gt_0 	 706 	 56
+gt_1 	 35 	 203
+batch[20/250], loss: 0.141845
+batch[40/250], loss: 0.160898
+batch[60/250], loss: 0.158091
+batch[80/250], loss: 0.173968
+batch[100/250], loss: 0.167630
+batch[120/250], loss: 0.162029
+batch[140/250], loss: 0.161564
+batch[160/250], loss: 0.156098
+batch[180/250], loss: 0.147906
+batch[200/250], loss: 0.150658
+batch[220/250], loss: 0.148098
+batch[240/250], loss: 0.152333
+batch[250/250], loss: 0.153669
+epoch2 ends
+f1       : 77.18%
+accuracy : 87.70%
+precision: 69.10%
+recall   : 87.39%
+
+	 pred_0	 pred_1
+gt_0 	 669 	 93
+gt_1 	 30 	 208
+batch[20/250], loss: 0.088386
+batch[40/250], loss: 0.111724
+batch[60/250], loss: 0.105535
+batch[80/250], loss: 0.096831
+batch[100/250], loss: 0.091957
+batch[120/250], loss: 0.112909
+batch[140/250], loss: 0.107815
+batch[160/250], loss: 0.108993
+batch[180/250], loss: 0.106207
+batch[200/250], loss: 0.100746
+batch[220/250], loss: 0.104437
+batch[240/250], loss: 0.105455
+batch[250/250], loss: 0.104297
+epoch3 ends
+f1       : 81.36%
+accuracy : 91.80%
+precision: 88.61%
+recall   : 75.21%
+
+	 pred_0	 pred_1
+gt_0 	 739 	 23
+gt_1 	 59 	 179
+batch[20/250], loss: 0.105500
+batch[40/250], loss: 0.089028
+batch[60/250], loss: 0.099937
+batch[80/250], loss: 0.090099
+batch[100/250], loss: 0.098008
+batch[120/250], loss: 0.095167
+batch[140/250], loss: 0.097161
+batch[160/250], loss: 0.087675
+batch[180/250], loss: 0.086007
+batch[200/250], loss: 0.086792
+batch[220/250], loss: 0.087279
+batch[240/250], loss: 0.085667
+batch[250/250], loss: 0.083513
+epoch4 ends
+f1       : 76.24%
+accuracy : 89.90%
+precision: 86.63%
+recall   : 68.07%
+
+	 pred_0	 pred_1
+gt_0 	 737 	 25
+gt_1 	 76 	 162
+batch[20/250], loss: 0.058641
+batch[40/250], loss: 0.065344
+batch[60/250], loss: 0.061009
+batch[80/250], loss: 0.067098
+batch[100/250], loss: 0.067640
+batch[120/250], loss: 0.070006
+batch[140/250], loss: 0.069684
+batch[160/250], loss: 0.063598
+batch[180/250], loss: 0.063002
+batch[200/250], loss: 0.064786
+batch[220/250], loss: 0.071348
+batch[240/250], loss: 0.070925
+batch[250/250], loss: 0.071546
+epoch5 ends
+f1       : 77.86%
+accuracy : 88.00%
+precision: 69.41%
+recall   : 88.66%
+
+	 pred_0	 pred_1
+gt_0 	 669 	 93
+gt_1 	 27 	 211
+batch[20/250], loss: 0.169064
+batch[40/250], loss: 0.135327
+batch[60/250], loss: 0.099258
+batch[80/250], loss: 0.079801
+batch[100/250], loss: 0.067804
+batch[120/250], loss: 0.067182
+batch[140/250], loss: 0.067839
+batch[160/250], loss: 0.066429
+batch[180/250], loss: 0.061907
+batch[200/250], loss: 0.056384
+batch[220/250], loss: 0.051664
+batch[240/250], loss: 0.050900
+batch[250/250], loss: 0.050907
+epoch6 ends
+f1       : 79.76%
+accuracy : 90.00%
+precision: 76.95%
+recall   : 82.77%
+
+	 pred_0	 pred_1
+gt_0 	 703 	 59
+gt_1 	 41 	 197
+batch[20/250], loss: 0.070148
+batch[40/250], loss: 0.043572
+batch[60/250], loss: 0.030577
+batch[80/250], loss: 0.023922
+batch[100/250], loss: 0.019670
+batch[120/250], loss: 0.023828
+batch[140/250], loss: 0.022463
+batch[160/250], loss: 0.025924
+batch[180/250], loss: 0.036425
+batch[200/250], loss: 0.042569
+batch[220/250], loss: 0.041732
+batch[240/250], loss: 0.041682
+batch[250/250], loss: 0.041946
+epoch7 ends
+f1       : 80.08%
+accuracy : 90.60%
+precision: 80.77%
+recall   : 79.41%
+
+	 pred_0	 pred_1
+gt_0 	 717 	 45
+gt_1 	 49 	 189
+batch[20/250], loss: 0.013037
+batch[40/250], loss: 0.012005
+batch[60/250], loss: 0.026443
+batch[80/250], loss: 0.035302
+batch[100/250], loss: 0.037784
+batch[120/250], loss: 0.033272
+batch[140/250], loss: 0.035045
+batch[160/250], loss: 0.049060
+batch[180/250], loss: 0.051907
+batch[200/250], loss: 0.052597
+batch[220/250], loss: 0.051265
+batch[240/250], loss: 0.048282
+batch[250/250], loss: 0.048682
+epoch8 ends
+f1       : 81.40%
+accuracy : 91.00%
+precision: 80.08%
+recall   : 82.77%
+
+	 pred_0	 pred_1
+gt_0 	 713 	 49
+gt_1 	 41 	 197
+batch[20/250], loss: 0.031863
+batch[40/250], loss: 0.018121
+batch[60/250], loss: 0.020955
+batch[80/250], loss: 0.028509
+batch[100/250], loss: 0.026855
+batch[120/250], loss: 0.032070
+batch[140/250], loss: 0.036698
+batch[160/250], loss: 0.041210
+batch[180/250], loss: 0.042101
+batch[200/250], loss: 0.039162
+batch[220/250], loss: 0.038878
+batch[240/250], loss: 0.035822
+batch[250/250], loss: 0.036432
+epoch9 ends
+f1       : 80.43%
+accuracy : 90.90%
+precision: 82.38%
+recall   : 78.57%
+
+	 pred_0	 pred_1
+gt_0 	 722 	 40
+gt_1 	 51 	 187
+batch[20/250], loss: 0.038087
+batch[40/250], loss: 0.022010
+batch[60/250], loss: 0.023477
+batch[80/250], loss: 0.031969
+batch[100/250], loss: 0.031846
+batch[120/250], loss: 0.029376
+batch[140/250], loss: 0.026830
+batch[160/250], loss: 0.027683
+batch[180/250], loss: 0.024963
+batch[200/250], loss: 0.024771
+batch[220/250], loss: 0.027944
+batch[240/250], loss: 0.026679
+batch[250/250], loss: 0.025893
+epoch10 ends
+f1       : 83.05%
+accuracy : 92.00%
+precision: 83.76%
+recall   : 82.35%
+
+	 pred_0	 pred_1
+gt_0 	 724 	 38
+gt_1 	 42 	 196
+=== finish training ===
+2023-03-20_13:38:56

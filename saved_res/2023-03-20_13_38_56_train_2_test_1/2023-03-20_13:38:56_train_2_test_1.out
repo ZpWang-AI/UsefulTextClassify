@@ -1,0 +1,165 @@
+[['base', True], ['batch_size', 8], ['clip', False], ['cuda_id', '8'], ['dev_data_file', './data/non_answer_dataset_for_zhipang.xlsx'], ['device', 'cuda'], ['epochs', 10], ['input_feature', 'reply only'], ['just_test', False], ['lr', 5e-05], ['model_name', 'hfl/chinese-roberta-wwm-ext'], ['pb_frequency', 20], ['pretrained_model_fold', './saved_model'], ['save_model_epoch', 1], ['save_res_fold', './saved_res'], ['train_data_file', './data/2_result.xlsx'], ['train_ratio', 0.8], ['version', 'train 2 test 1']]
+2023-03-20_13:38:56
+=== start training ===
+batch[20/125], loss: 0.426517
+batch[40/125], loss: 0.338369
+batch[60/125], loss: 0.315009
+batch[80/125], loss: 0.299575
+batch[100/125], loss: 0.281617
+batch[120/125], loss: 0.292975
+batch[125/125], loss: 0.291471
+epoch1 ends
+f1       : 83.33%
+accuracy : 91.70%
+precision: 80.12%
+recall   : 86.82%
+
+	 pred_0	 pred_1
+gt_0 	 1419 	 103
+gt_1 	 63 	 415
+batch[20/125], loss: 0.128621
+batch[40/125], loss: 0.170647
+batch[60/125], loss: 0.169285
+batch[80/125], loss: 0.173455
+batch[100/125], loss: 0.164683
+batch[120/125], loss: 0.160141
+batch[125/125], loss: 0.158217
+epoch2 ends
+f1       : 69.06%
+accuracy : 88.35%
+precision: 94.55%
+recall   : 54.39%
+
+	 pred_0	 pred_1
+gt_0 	 1507 	 15
+gt_1 	 218 	 260
+batch[20/125], loss: 0.056844
+batch[40/125], loss: 0.087628
+batch[60/125], loss: 0.094762
+batch[80/125], loss: 0.087202
+batch[100/125], loss: 0.092706
+batch[120/125], loss: 0.097731
+batch[125/125], loss: 0.095035
+epoch3 ends
+f1       : 80.84%
+accuracy : 91.35%
+precision: 85.88%
+recall   : 76.36%
+
+	 pred_0	 pred_1
+gt_0 	 1462 	 60
+gt_1 	 113 	 365
+batch[20/125], loss: 0.038655
+batch[40/125], loss: 0.050148
+batch[60/125], loss: 0.055898
+batch[80/125], loss: 0.060369
+batch[100/125], loss: 0.053302
+batch[120/125], loss: 0.047141
+batch[125/125], loss: 0.045712
+epoch4 ends
+f1       : 77.70%
+accuracy : 90.50%
+precision: 88.50%
+recall   : 69.25%
+
+	 pred_0	 pred_1
+gt_0 	 1479 	 43
+gt_1 	 147 	 331
+batch[20/125], loss: 0.074316
+batch[40/125], loss: 0.041130
+batch[60/125], loss: 0.040305
+batch[80/125], loss: 0.039149
+batch[100/125], loss: 0.032531
+batch[120/125], loss: 0.034659
+batch[125/125], loss: 0.033444
+epoch5 ends
+f1       : 80.09%
+accuracy : 91.05%
+precision: 85.51%
+recall   : 75.31%
+
+	 pred_0	 pred_1
+gt_0 	 1461 	 61
+gt_1 	 118 	 360
+batch[20/125], loss: 0.004084
+batch[40/125], loss: 0.003040
+batch[60/125], loss: 0.006719
+batch[80/125], loss: 0.006063
+batch[100/125], loss: 0.005268
+batch[120/125], loss: 0.004703
+batch[125/125], loss: 0.004553
+epoch6 ends
+f1       : 81.79%
+accuracy : 91.45%
+precision: 83.30%
+recall   : 80.33%
+
+	 pred_0	 pred_1
+gt_0 	 1445 	 77
+gt_1 	 94 	 384
+batch[20/125], loss: 0.000762
+batch[40/125], loss: 0.000789
+batch[60/125], loss: 0.000706
+batch[80/125], loss: 0.001322
+batch[100/125], loss: 0.001186
+batch[120/125], loss: 0.001067
+batch[125/125], loss: 0.001040
+epoch7 ends
+f1       : 79.87%
+accuracy : 90.95%
+precision: 85.27%
+recall   : 75.10%
+
+	 pred_0	 pred_1
+gt_0 	 1460 	 62
+gt_1 	 119 	 359
+batch[20/125], loss: 0.000363
+batch[40/125], loss: 0.000354
+batch[60/125], loss: 0.000432
+batch[80/125], loss: 0.000394
+batch[100/125], loss: 0.000350
+batch[120/125], loss: 0.000322
+batch[125/125], loss: 0.000326
+epoch8 ends
+f1       : 80.61%
+accuracy : 91.15%
+precision: 84.60%
+recall   : 76.99%
+
+	 pred_0	 pred_1
+gt_0 	 1455 	 67
+gt_1 	 110 	 368
+batch[20/125], loss: 0.000207
+batch[40/125], loss: 0.000201
+batch[60/125], loss: 0.000190
+batch[80/125], loss: 0.000201
+batch[100/125], loss: 0.000188
+batch[120/125], loss: 0.000187
+batch[125/125], loss: 0.000185
+epoch9 ends
+f1       : 81.05%
+accuracy : 91.30%
+precision: 84.55%
+recall   : 77.82%
+
+	 pred_0	 pred_1
+gt_0 	 1454 	 68
+gt_1 	 106 	 372
+batch[20/125], loss: 0.000134
+batch[40/125], loss: 0.000130
+batch[60/125], loss: 0.000130
+batch[80/125], loss: 0.000123
+batch[100/125], loss: 0.000121
+batch[120/125], loss: 0.000122
+batch[125/125], loss: 0.000120
+epoch10 ends
+f1       : 81.05%
+accuracy : 91.30%
+precision: 84.55%
+recall   : 77.82%
+
+	 pred_0	 pred_1
+gt_0 	 1454 	 68
+gt_1 	 106 	 372
+=== finish training ===
+2023-03-20_13:43:06
