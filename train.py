@@ -67,6 +67,7 @@ def eval_main(model, eval_dataloader, logger):
             f'\n\t pred_0\t pred_1',
             f'gt_0 \t {confusion_matrix[0][0]} \t {confusion_matrix[0][1]}',
             f'gt_1 \t {confusion_matrix[1][0]} \t {confusion_matrix[1][1]}',
+            '\n',
             sep='\n'
         )
         pass
