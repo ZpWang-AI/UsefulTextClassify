@@ -23,6 +23,7 @@ train_data_file_list = [
 test_data_file_list = [
     r'./data/randomdata10k_test_dataset.xlsx',
     r'./data/non_answer_dataset_for_zhipang.xlsx',
+    r'./data/txt1.csv',
 ]
 
 
@@ -132,6 +133,10 @@ def preprocess_test_data(test_data_file=test_data_file_list[0]):
         meaning: SN, Qsubj, Reply, non_answer
         '''
         return test_content[:, (1, 2)]
+    elif test_data_file == test_data_file[2]:
+        test_content = pd.read_csv(test_content)
+        test_content = np.array(test_content)
+        return test_content
     else:
         raise 'Preprocess test data'
 
