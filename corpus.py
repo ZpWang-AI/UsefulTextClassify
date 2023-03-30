@@ -24,6 +24,7 @@ test_data_file_list = [
     r'./data/randomdata10k_test_dataset.xlsx',
     r'./data/non_answer_dataset_for_zhipang.xlsx',
     r'./data/txt1.csv',
+    r'./data/EasyIR(QnA)(wP).csv'
 ]
 
 
@@ -136,7 +137,20 @@ def preprocess_test_data(test_data_file=test_data_file_list[0]):
     elif test_data_file == test_data_file_list[2]:
         test_content = pd.read_csv(test_data_file)
         test_content = np.array(test_content)
+        '''
+        shape: 4159641 * 2
+        meaning: id, Reply
+        '''
         return test_content
+    elif test_data_file == test_data_file_list[3]:
+        test_content = pd.read_csv(test_data_file)
+        test_content = np.array(test_content)
+        '''
+        shape: 4404092 * 4
+               4152730(filtered)
+        meaning: id, HasReplied, Qsubj, Reply
+        '''
+        return test_content[test_content[:,1]==1][:,(2,3)]
     else:
         raise 'Preprocess test data'
 
@@ -183,10 +197,13 @@ class CustomDataset(Dataset):
 
 
 if __name__ == '__main__':
-
-    # print(preprocess_train_data(train_data_file_list[2]))
-    # print(preprocess_test_data(test_data_file_list[1]))
-    # exit()
+    sample_data = preprocess_test_data(test_data_file_list[3])
+    # sample_data = preprocess_train_data(train_data_file_list[2])
+    print(sample_data.shape)
+    print(sample_data[:10])
+    # print(np.sum(sample_data[:,1]))
+    
+    exit()
     sample_config = CustomConfig()
     sample_train_file = train_data_file_list[1]+'@'+train_data_file_list[2]
     sample_train_data = preprocess_train_data(sample_train_file)
