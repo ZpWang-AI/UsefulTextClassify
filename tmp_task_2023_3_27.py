@@ -40,19 +40,23 @@ def main():
                 non_answer = dic.get(reply, -1)
                 if non_answer == -1:
                     no_dealt += 1
-                f.write(f'{pid},{non_answer}\n')
+            else:
+                non_answer = -1
+            f.write(f'{pid},{non_answer}\n')
     print(no_dealt)
 
 
 def check():
     ans = pd.read_csv(target_file)
-    ans = np.array(ans)
-    for a, b in ans:
-        if b not in [0,1]:
-            print('???')
-            break
-    else:
-        print('well')
+    ans = np.array(ans)[:,1]
+    print(np.sum(ans==-1), np.sum(ans==0), np.sum(ans==1))
+    print(ans.shape)
+    # for a, b in ans:
+    #     if b not in [0,1]:
+    #         print('???')
+    #         break
+    # else:
+    #     print('well')
 
 if __name__ == '__main__':
     # main()
