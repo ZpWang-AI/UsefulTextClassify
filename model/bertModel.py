@@ -61,8 +61,9 @@ if __name__ == '__main__':
         input_feature = 'reply only'  # reply only, qsubj+reply, reply+qsubj
         
     sample_sentence_pairs = [
-        ['你好', '我好'],
-        ['他好', '谢谢'*100000],
+        # ['你好', '我好'],
+        # ['他好', '谢谢'*100000],
+        ['', '谢谢关注']
     ]
     sample_model = BertModel(SampleConfig())
     sample_model.get_pretrained_model()
