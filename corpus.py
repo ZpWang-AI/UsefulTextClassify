@@ -19,10 +19,12 @@ train_data_file_list = [
     r'./data/randomdata_1000 20230213_training_dataset.xlsx',
     r'./data/non_answer_dataset_for_zhipang.xlsx',
     r'./data/2_result.xlsx',
+    r'./data/training_dataset_nonquestions_forML.xlsx'
 ]
 test_data_file_list = [
     r'./data/randomdata10k_test_dataset.xlsx',
     r'./data/non_answer_dataset_for_zhipang.xlsx',
+    r'./data/test_dataset_nonquestions_forMLmarker.xlsx'
 ]
 
 
@@ -50,7 +52,7 @@ def save_excel(lines: List[list], heads: List[str], excel_file, sheet_name, star
     # print(f'{excel_file} {sheet_name} is saved')
 
 
-def preprocess_train_data(train_data_file=train_data_file_list[0]):
+def preprocess_train_data(train_data_file=train_data_file_list[0]) -> np.ndarray:
     if train_data_file == train_data_file_list[0]:
         train_content = read_excel(train_data_file)
         # print(train_content.shape)
@@ -94,6 +96,15 @@ def preprocess_train_data(train_data_file=train_data_file_list[0]):
         meaning: <EMPTY> SN Qsubj Reply <non_answer (machine marked)> <non_answer (human marked)>
         '''
         return train_content[:, (2, 3, 5)]
+    elif train_data_file == train_data_file_list[3]:
+        train_content = read_excel(train_data_file)
+        print(train_content.shape)
+        print(train_content[0])
+        '''
+        shape: 2000 * 4
+        meaning: id Qsubj Reply real_questions
+        '''
+        return train_content[:, 1:]
     elif '@' in train_data_file:
         return np.concatenate([preprocess_train_data(file)for file in train_data_file.split('@')])
     else:
@@ -130,6 +141,15 @@ def preprocess_test_data(test_data_file=test_data_file_list[0]):
         '''
         shape: 1000 * 4
         meaning: SN, Qsubj, Reply, non_answer
+        '''
+        return test_content[:, (1, 2)]
+    elif test_data_file == test_data_file_list[2]:
+        test_content = read_excel(test_data_file)
+        print(test_content.shape)
+        print(test_content[0])
+        '''
+        shape: 1000 * 4
+        meaning: id, Qsubj, Reply, real_question
         '''
         return test_content[:, (1, 2)]
     else:
@@ -179,11 +199,13 @@ class CustomDataset(Dataset):
 
 if __name__ == '__main__':
 
-    # print(preprocess_train_data(train_data_file_list[2]))
-    # print(preprocess_test_data(test_data_file_list[1]))
+    # print(preprocess_train_data(train_data_file_list[3]))
+    # print(preprocess_test_data(test_data_file_list[2]))
     # exit()
+    
     sample_config = CustomConfig()
-    sample_train_file = train_data_file_list[1]+'@'+train_data_file_list[2]
+    # sample_train_file = train_data_file_list[1]+'@'+train_data_file_list[2]
+    sample_train_file = train_data_file_list[3]
     sample_train_data = preprocess_train_data(sample_train_file)
     sample_train_data = CustomDataset(sample_train_data, sample_config)
     sample_train_data = DataLoader(sample_train_data, batch_size=3, shuffle=False)

@@ -23,6 +23,7 @@ test*
 *.sh
 nohup.out
 run.ipynb
+tmp/*
 
 __pycache__
 .vscode

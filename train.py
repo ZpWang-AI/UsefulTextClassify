@@ -209,13 +209,21 @@ if __name__ == '__main__':
         config.dev_data_file = ''
         return config
     
+    def get_config_question_base():
+        config = get_config_base_test()
+        config.train_data_file = train_data_file_list[3]
+        return config
+    
     # train_main(get_config_base_test())
     # train_main(get_config_base_test())
     # exit()
-    train_main(get_config_11())
-    train_main(get_config_22())
-    train_main(get_config_12())
-    train_main(get_config_21())
-    train_main(get_config_mix_12())
+    
+    # train_main(get_config_11())
+    # train_main(get_config_22())
+    # train_main(get_config_12())
+    # train_main(get_config_21())
+    # train_main(get_config_mix_12())
+    
+    train_main(get_config_question_base())
     
     

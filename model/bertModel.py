@@ -32,6 +32,8 @@ class BertModel(nn.Module):
     def forward(self, sentences):
         if self.config.input_feature == 'reply only':
             sentences = [sb for sa, sb in zip(*sentences)]
+        elif self.config.input_feature == 'qsubj only':
+            sentences = [sa for sa, sb in zip(*sentences)]
         elif self.config.input_feature == 'qsubj+reply':
             sentences = [sa+self.tokenizer.sep_token+sb for sa, sb in zip(*sentences)]    
         elif self.config.input_feature == 'reply+qsubj':
