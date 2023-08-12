@@ -21,7 +21,7 @@ class CustomConfig:
     test_model_path = './saved_res/2023-03-20_13:33:05_train 1 test 2/saved_model/2023-03-20_13-33-05_epoch10_830.pth'
     test_data_file = './data/non_answer_dataset_for_zhipang.xlsx'
     
-    input_feature = 'reply only'  # reply only, qsubj+reply, reply+qsubj
+    input_feature = 'reply only'  # reply only, qsubj only, qsubj+reply, reply+qsubj
     
     base = True
     clip = False

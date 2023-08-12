@@ -1,0 +1,8 @@
+hanlp==2.1.0b50
+numpy==1.24.3
+pandas==2.0.3
+scikit_learn==1.3.0
+torch==2.0.1
+torcheval==0.0.6
+tqdm==4.66.1
+transformers==4.31.0

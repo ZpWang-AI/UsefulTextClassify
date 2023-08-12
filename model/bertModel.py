@@ -39,7 +39,7 @@ class BertModel(nn.Module):
         elif self.config.input_feature == 'reply+qsubj':
             sentences = [sb+self.tokenizer.sep_token+sa for sa, sb in zip(*sentences)]
         else:
-            raise 'Wrong Config.input_feature'
+            raise BaseException( 'Wrong Config.input_feature')
         
         encoded_sentences = self.tokenizer(sentences, padding=True, truncation=True, max_length=512, return_tensors='pt')
         encoded_sentences = encoded_sentences.to(self.config.device)

@@ -4,6 +4,8 @@ data/*
 !data/randomdata10k_test_dataset.xlsx
 !data/non_answer_dataset_for_zhipang.xlsx
 !data/2_result.xlsx
+!data/test_dataset_nonquestions_forMLmarker.xlsx
+!data/training_dataset_nonquestions_forML.xlsx
 
 !data/result.xlsx
 
@@ -14,6 +16,7 @@ saved_res/*/*
 !saved_res/2023-03-20_13_26_12_train_1_test_1/2023-03-20_13:26:12_train_1_test_1.out
 !saved_res/2023-03-20_13_38_56_train_2_test_1/2023-03-20_13:38:56_train_2_test_1.out
 !saved_res/2023-03-20_13_43_06_train_mix12_test_mix12/2023-03-20_13:43:06_train_mix12_test_mix12.out
+!saved_res/2023-08-12_13_23_24_question_base/2023-08-12_13_23_24_question_base.out
 
 saved_model/*
 # saved_res.txt

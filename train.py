@@ -209,11 +209,6 @@ if __name__ == '__main__':
         config.dev_data_file = ''
         return config
     
-    def get_config_question_base():
-        config = get_config_base_test()
-        config.train_data_file = train_data_file_list[3]
-        return config
-    
     # train_main(get_config_base_test())
     # train_main(get_config_base_test())
     # exit()
@@ -223,6 +218,25 @@ if __name__ == '__main__':
     # train_main(get_config_12())
     # train_main(get_config_21())
     # train_main(get_config_mix_12())
+    
+    
+    def get_config_question_base():
+        custom_config = CustomConfig()
+        custom_config.version = 'question base'
+        custom_config.device = 'cuda'
+        custom_config.cuda_id = '3'
+        custom_config.input_feature = 'qsubj only'
+        
+        # custom_config.just_test = True
+        custom_config.save_model_epoch = 1
+        custom_config.pb_frequency = 20
+        custom_config.batch_size = 8
+        custom_config.lr = 5e-5
+        
+        custom_config.train_data_file = train_data_file_list[3]
+        custom_config.dev_data_file = ''
+        return custom_config
+    
     
     train_main(get_config_question_base())
     

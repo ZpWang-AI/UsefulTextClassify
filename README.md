@@ -7,7 +7,7 @@ Classify QA corpus by BERT.
 1. Check data files in folder "data"
 2. Reset config in file "train.py"
 3. Run $python\ train.py$
-4. Fetch the result from fold "saved_res", which would be automatically made by code
+4. Fetch the result from fold "saved_res", which would be automatically created by code
 
 ### Infer
 

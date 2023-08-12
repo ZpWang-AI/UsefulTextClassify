@@ -19,13 +19,14 @@ train_data_file_list = [
     r'./data/randomdata_1000 20230213_training_dataset.xlsx',
     r'./data/non_answer_dataset_for_zhipang.xlsx',
     r'./data/2_result.xlsx',
-    r'./data/training_dataset_nonquestions_forML.xlsx'
+    r'./data/training_dataset_nonquestions_forML.xlsx',
 ]
 test_data_file_list = [
     r'./data/randomdata10k_test_dataset.xlsx',
     r'./data/non_answer_dataset_for_zhipang.xlsx',
     r'./data/txt1.csv',
-    r'./data/EasyIR(QnA)(wP).csv'
+    r'./data/EasyIR(QnA)(wP).csv',
+    r'./data/test_dataset_nonquestions_forMLmarker.xlsx'
 ]
 
 
@@ -99,17 +100,18 @@ def preprocess_train_data(train_data_file=train_data_file_list[0]) -> np.ndarray
         return train_content[:, (2, 3, 5)]
     elif train_data_file == train_data_file_list[3]:
         train_content = read_excel(train_data_file)
-        print(train_content.shape)
-        print(train_content[0])
+        # print(train_content.shape)
+        # print(train_content[0])
         '''
         shape: 2000 * 4
         meaning: id Qsubj Reply real_questions
         '''
         return train_content[:, 1:]
+    
     elif '@' in train_data_file:
         return np.concatenate([preprocess_train_data(file)for file in train_data_file.split('@')])
     else:
-        raise 'Preprocess train data'
+        raise BaseException( 'Preprocess train data')
     
 def preprocess_test_data(test_data_file=test_data_file_list[0]):
     if test_data_file == test_data_file_list[0]:
@@ -161,8 +163,18 @@ def preprocess_test_data(test_data_file=test_data_file_list[0]):
         meaning: id, HasReplied, Qsubj, Reply
         '''
         return test_content[test_content[:,1]==1][:,(2,3)]
+    elif test_data_file == test_data_file_list[4]:
+        test_content = read_excel(test_data_file)
+        print(test_content)
+        print(test_content.shape)
+        print(test_content[0])
+        '''
+        shape: 1000 * 4
+        meaning: id, Qsubj, Reply, real_questions
+        '''
+        return test_content[:, (1, 2)]
     else:
-        raise 'Preprocess test data'
+        raise BaseException('Preprocess test data')
 
 
 class CustomDataset(Dataset):
@@ -192,7 +204,7 @@ class CustomDataset(Dataset):
             elif self.config.clip:
                 return (self.deal_sentence(sentence1), self.deal_sentence(sentence2)), label
             else:
-                raise 'wrong config' 
+                raise BaseException( 'wrong config' )
         elif self.phase == 'test':
             if len(self.data[index]) == 2:
                 sentence1, sentence2 = self.data[index]
@@ -201,19 +213,20 @@ class CustomDataset(Dataset):
                 sentence1, sentence2, _ = self.data[index]
                 return self.deal_sentence(sentence1), self.deal_sentence(sentence2)
             else:
-                raise 'Wrong Dataset'
+                raise BaseException( 'Wrong Dataset')
         else:
-            raise 'Wrong phase of dataset'
+            raise BaseException( 'Wrong phase of dataset')
 
 
 if __name__ == '__main__':
-    sample_data = preprocess_test_data(test_data_file_list[3])
-    # sample_data = preprocess_train_data(train_data_file_list[2])
-    print(sample_data.shape)
-    print(sample_data[:10])
+    # sample_data = preprocess_train_data(train_data_file_list[3])
+    # sample_data = preprocess_test_data(test_data_file_list[4])
+    # print(sample_data.shape)
+    # print(sample_data[:10])
     # print(np.sum(sample_data[:,1]))
-    
-    exit()
+    # exit()
+
+
     sample_config = CustomConfig()
     # sample_train_file = train_data_file_list[1]+'@'+train_data_file_list[2]
     sample_train_file = train_data_file_list[3]
