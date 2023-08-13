@@ -26,7 +26,8 @@ test_data_file_list = [
     r'./data/non_answer_dataset_for_zhipang.xlsx',
     r'./data/txt1.csv',
     r'./data/EasyIR(QnA)(wP).csv',
-    r'./data/test_dataset_nonquestions_forMLmarker.xlsx'
+    r'./data/test_dataset_nonquestions_forMLmarker.xlsx',
+    r'./data/questions_with_id_dataset.csv',
 ]
 
 
@@ -173,6 +174,17 @@ def preprocess_test_data(test_data_file=test_data_file_list[0]):
         meaning: id, Qsubj, Reply, real_questions
         '''
         return test_content[:, (1, 2)]
+    elif test_data_file == test_data_file_list[5]:
+        test_content = pd.read_csv(test_data_file)
+        # print(test_content.head)
+        test_content = np.array(test_content)
+        # print(test_content.shape)
+        # print(test_content[0])
+        '''
+        shape: 4404092 * 3
+        meaning: <empty>, Qsubj, id
+        '''
+        return test_content[:, (1,2)]
     else:
         raise BaseException('Preprocess test data')
 
@@ -220,11 +232,11 @@ class CustomDataset(Dataset):
 
 if __name__ == '__main__':
     # sample_data = preprocess_train_data(train_data_file_list[3])
-    # sample_data = preprocess_test_data(test_data_file_list[4])
+    sample_data = preprocess_test_data(test_data_file_list[5])
     # print(sample_data.shape)
     # print(sample_data[:10])
     # print(np.sum(sample_data[:,1]))
-    # exit()
+    exit()
 
 
     sample_config = CustomConfig()

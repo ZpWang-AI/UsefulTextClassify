@@ -69,6 +69,12 @@ def inference_main(config: CustomConfig):
         writer = pd.ExcelWriter(save_res_path)
         test_data_content.to_excel(writer)
         writer.close()
+    elif test_data_file == test_data_file_list[5]:
+        save_res_path = f'./data/result_{config.version}.csv'
+        with open(save_res_path, 'w')as f:
+            f.write('id,real_questions\n')
+            for p, d in enumerate(list(preds)):
+                f.write(f'{p+1},{d}\n')
     else:
         raise BaseException( 'Wrong test file in inference.py')
     
@@ -106,6 +112,19 @@ if __name__ == '__main__':
         custom_config.test_model_path = r'./saved_res/2023-08-12_13_23_24_question_base/saved_model/2023-08-12_13_23_24_epoch5_971.pth'
         custom_config.pb_frequency = 100
         return custom_config
+
+    def get_config_infer_question_4M():
+        custom_config = CustomConfig()
+        custom_config.input_feature = 'qsubj only'
+        custom_config.device = 'cuda'
+        custom_config.cuda_id = '5'
+        custom_config.batch_size = 32
+
+        custom_config.test_data_file = test_data_file_list[5]
+        custom_config.version = 'classify_real_questions_4M'
+        custom_config.test_model_path = r'./saved_res/2023-08-12_13_23_24_question_base/saved_model/2023-08-12_13_23_24_epoch5_971.pth'
+        custom_config.pb_frequency = 100
+        return custom_config
     
-    infer_config = get_config_infer_question_base()
+    infer_config = get_config_infer_question_4M()
     inference_main(infer_config)
